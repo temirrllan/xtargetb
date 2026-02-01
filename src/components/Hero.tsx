@@ -12,7 +12,6 @@ export default function Hero() {
           dpr={[1, 2]}
           gl={{ alpha: true, antialias: true }}
         >
-          <color attach="background" args={['transparent']} />
           <Suspense fallback={null}>
             <HeroScene />
           </Suspense>
