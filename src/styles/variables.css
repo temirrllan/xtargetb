@@ -1,0 +1,36 @@
+:root {
+  /* Backgrounds — deep dark blue/black as on photo */
+  --bg-primary: #0a111f;
+  --bg-secondary: #060a12;
+  --bg-card: #151c2c;
+  --bg-card-hover: #1a2235;
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  /* Accents — match photo exactly */
+  --accent-green: #22c55e;
+  --accent-green-dark: #16a34a;
+  --accent-blue: #3b82f6;
+  --accent-blue-dark: #2563eb;
+  --accent-yellow: #e5ff00;
+  --accent-yellow-dark: #c5e000;
+  --accent-purple: #8b5cf6;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.15);
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing */
+  --section-padding-y: clamp(3rem, 8vw, 6rem);
+  --section-padding-x: clamp(1rem, 4vw, 2rem);
+  --container-max: 1200px;
+
+  /* Header */
+  --header-height: 72px;
+}

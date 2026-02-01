@@ -1,0 +1,190 @@
+.tariffs {
+  padding: var(--section-padding-y) var(--section-padding-x);
+  background: var(--bg-primary);
+}
+
+.tariffs__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tariffs__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: rgba(167, 237, 42, 0.15);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.tariffs__badge svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-green);
+}
+
+.tariffs__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+}
+
+.tariffs__subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: 0 0 2.5rem;
+}
+
+.tariffs__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 720px;
+  margin: 0 auto 2rem;
+}
+
+.tariffs__card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: left;
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.tariffs__card:hover {
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+}
+
+.tariffs__card--pro {
+  border: 2px solid var(--accent-green);
+  box-shadow: 0 0 30px rgba(167, 237, 42, 0.15);
+}
+
+.tariffs__popular {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.35rem 1rem;
+  background: var(--accent-yellow);
+  color: #1a1d23;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.tariffs__card-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem;
+}
+
+.tariffs__card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0 0 1.25rem;
+}
+
+.tariffs__price {
+  margin-bottom: 1.5rem;
+}
+
+.tariffs__price-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.tariffs__price-period {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-left: 0.25rem;
+}
+
+.tariffs__features {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.tariffs__features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.tariffs__check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  position: relative;
+}
+
+.tariffs__check::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #1a1d23;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.tariffs__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.tariffs__btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.tariffs__btn--outline {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+
+.tariffs__btn--primary {
+  background: var(--accent-green);
+  color: #1a1d23;
+}
+
+@media (max-width: 600px) {
+  .tariffs__cards {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .tariffs__card {
+    padding: 1.5rem;
+  }
+
+  .tariffs__price-value {
+    font-size: 2rem;
+  }
+}

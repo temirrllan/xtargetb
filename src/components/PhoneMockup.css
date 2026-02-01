@@ -1,0 +1,159 @@
+.phone-mockup {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 380px;
+}
+
+.phone-mockup__floating-icon {
+  position: absolute;
+  top: 0;
+  right: 10%;
+  width: 40px;
+  height: 40px;
+  color: var(--accent-blue);
+  animation: phone-float 5s ease-in-out infinite;
+}
+
+.phone-mockup__floating-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes phone-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.phone-mockup__device {
+  width: 260px;
+  max-width: 90vw;
+  background: #1e2228;
+  border-radius: 28px;
+  padding: 12px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  transition: transform 0.3s;
+}
+
+.phone-mockup__device:hover {
+  transform: translateY(-4px) rotateY(-2deg);
+}
+
+.phone-mockup__screen {
+  background: var(--bg-card);
+  border-radius: 18px;
+  padding: 1.25rem;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-mockup__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.phone-mockup__logo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.phone-mockup__logo-x {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: var(--accent-green);
+  color: #1a1d23;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 4px;
+  margin-right: 4px;
+  font-size: 0.75rem;
+}
+
+.phone-mockup__chart-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--accent-blue);
+}
+
+.phone-mockup__metrics {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.phone-mockup__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.phone-mockup__row span:first-child {
+  grid-column: 1;
+}
+
+.phone-mockup__bar {
+  grid-column: 1 / -1;
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.phone-mockup__fill {
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.phone-mockup__pct {
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--accent-blue);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.phone-mockup__cta {
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  background: var(--accent-blue);
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.phone-mockup__cta:hover {
+  opacity: 0.95;
+}
+
+.phone-mockup__cta svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .phone-mockup__device {
+    width: 240px;
+  }
+
+  .phone-mockup__screen {
+    min-height: 380px;
+  }
+}
