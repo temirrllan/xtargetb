@@ -68,13 +68,10 @@ export default function Performers() {
         <div className="performers__visual">
           <div className="performers__canvas-wrap">
             <Canvas
-              camera={{ position: [0, 0, 35], fov: 50 }}
+              camera={{ position: [0, 0, 45], fov: 50 }}
               dpr={[1, 2]}
               gl={{ alpha: true, antialias: true }}
             >
-              <color attach="background" args={['transparent']} />
-              <ambientLight intensity={0.5} />
-              <pointLight position={[10, 10, 10]} intensity={1} />
               <Suspense fallback={null}>
                 <OrbitalScene />
               </Suspense>

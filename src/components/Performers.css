@@ -1,7 +1,20 @@
 .performers {
   padding: var(--section-padding-y) var(--section-padding-x);
-  background: var(--bg-secondary);
+  background: linear-gradient(135deg, #050810 0%, #0a0e16 50%, #0d1219 100%);
   overflow: hidden;
+  position: relative;
+}
+
+/* Добавляем тонкий градиент сверху */
+.performers::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: radial-gradient(ellipse at top, rgba(167, 237, 42, 0.05) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .performers__container {
@@ -9,42 +22,82 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 4rem;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .performers__visual {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
+  min-height: 550px;
+  position: relative;
+}
+
+/* Эффект свечения за 3D-сценой */
+.performers__visual::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(229, 255, 0, 0.15) 0%, rgba(229, 255, 0, 0.05) 40%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: performers-glow 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes performers-glow {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 .performers__canvas-wrap {
   width: 100%;
-  max-width: 420px;
+  max-width: 550px;
   aspect-ratio: 1;
   border-radius: 50%;
-  overflow: hidden;
-  background: radial-gradient(circle, rgba(167, 237, 42, 0.08) 0%, transparent 70%);
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 40px rgba(229, 255, 0, 0.15));
 }
 
 .performers__canvas-wrap canvas {
   display: block;
   width: 100%;
   height: 100%;
+  background: transparent !important;
 }
 
 .performers__badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.4rem 1rem;
-  background: rgba(139, 92, 246, 0.2);
-  border-radius: 8px;
+  padding: 0.5rem 1.1rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 999px;
   font-size: 0.85rem;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #b794f6;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+  transition: all 0.3s ease;
+}
+
+.performers__badge:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0.25) 100%);
+  border-color: rgba(139, 92, 246, 0.5);
+  transform: translateY(-1px);
 }
 
 .performers__badge svg {
@@ -54,48 +107,96 @@
 }
 
 .performers__title {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
   color: var(--text-primary);
-  margin: 0 0 1rem;
-  line-height: 1.3;
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .performers__highlight {
-  color: var(--accent-green);
+  background: linear-gradient(135deg, #e5ff00 0%, #b8c900 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+}
+
+/* Тонкое свечение под выделенным текстом */
+.performers__highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, transparent, rgba(229, 255, 0, 0.3), transparent);
+  filter: blur(8px);
+  z-index: -1;
 }
 
 .performers__desc {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin: 0 0 1.5rem;
+  color: #9ca3b0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0 0 2rem;
 }
 
 .performers__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .performers__card {
-  background: var(--bg-card);
-  border-radius: 14px;
-  padding: 1.25rem;
-  border: 1px solid var(--border-subtle);
-  transition: transform 0.2s, background 0.2s;
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.5) 0%, rgba(20, 28, 42, 0.4) 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(139, 92, 246, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Эффект свечения при наведении */
+.performers__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .performers__card:hover {
-  transform: translateY(-2px);
-  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.8) 0%, rgba(20, 28, 42, 0.6) 100%);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+}
+
+.performers__card:hover::before {
+  opacity: 1;
 }
 
 .performers__card-icon {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   color: var(--accent-purple);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.performers__card:hover .performers__card-icon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .performers__card-icon svg {
@@ -104,32 +205,36 @@
 }
 
 .performers__card-title {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .performers__card-desc {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.45;
+  font-size: 0.9rem;
+  color: #8891a0;
+  line-height: 1.6;
   margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 900px) {
   .performers__container {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 3rem;
   }
 
   .performers__visual {
     order: 0;
-    min-height: 320px;
+    min-height: 450px;
   }
 
   .performers__canvas-wrap {
-    max-width: 320px;
+    max-width: 450px;
   }
 
   .performers__content {
@@ -146,5 +251,18 @@
 @media (max-width: 600px) {
   .performers__grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .performers__visual {
+    min-height: 350px;
+  }
+
+  .performers__canvas-wrap {
+    max-width: 350px;
+  }
+
+  .performers__card {
+    padding: 1.25rem;
   }
 }

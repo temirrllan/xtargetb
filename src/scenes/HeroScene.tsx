@@ -3,140 +3,123 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const PARTICLE_COUNT = 2000
-const SPREAD = 120
+const SPREAD = 100
 
 export default function HeroScene() {
   const points = useRef<THREE.Points>(null)
   const circles = useRef<THREE.Group>(null)
-  const floatingOrbs = useRef<THREE.Group>(null)
-  const connectingLines = useRef<THREE.LineSegments>(null)
+  const floatingParticles = useRef<THREE.Points>(null)
 
-  const { positions, velocities, colors } = useMemo(() => {
+  const positions = useMemo(() => {
     const pos = new Float32Array(PARTICLE_COUNT * 3)
-    const vel = new Float32Array(PARTICLE_COUNT * 3)
-    const col = new Float32Array(PARTICLE_COUNT * 3)
-    
     for (let i = 0; i < PARTICLE_COUNT * 3; i += 3) {
-      pos[i] = (Math.random() - 0.5) * SPREAD
-      pos[i + 1] = (Math.random() - 0.5) * SPREAD
-      pos[i + 2] = (Math.random() - 0.5) * SPREAD * 0.4
+      // Создаем более естественное распределение частиц
+      const angle = Math.random() * Math.PI * 2
+      const radius = Math.random() * SPREAD * 0.5
+      const height = (Math.random() - 0.5) * SPREAD * 0.8
       
-      vel[i] = (Math.random() - 0.5) * 0.02
-      vel[i + 1] = (Math.random() - 0.5) * 0.02
-      vel[i + 2] = (Math.random() - 0.5) * 0.01
-      
-      // Цветовые вариации - голубой и зеленый
-      const isGreen = Math.random() > 0.7
-      col[i] = isGreen ? 0.13 : 0.23
-      col[i + 1] = isGreen ? 0.77 : 0.51
-      col[i + 2] = isGreen ? 0.37 : 0.96
+      pos[i] = Math.cos(angle) * radius + (Math.random() - 0.5) * 20
+      pos[i + 1] = height
+      pos[i + 2] = Math.sin(angle) * radius + (Math.random() - 0.5) * 20
     }
-    return { positions: pos, velocities: vel, colors: col }
+    return pos
+  }, [])
+
+  // Большие плавающие частицы
+  const largeParticlePositions = useMemo(() => {
+    const pos = new Float32Array(150 * 3)
+    for (let i = 0; i < 150 * 3; i += 3) {
+      pos[i] = (Math.random() - 0.5) * SPREAD * 0.7
+      pos[i + 1] = (Math.random() - 0.5) * SPREAD * 0.6
+      pos[i + 2] = (Math.random() - 0.5) * 30
+    }
+    return pos
   }, [])
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
     
-    // Медленное вращение частиц с волнообразным движением
+    // Медленное вращение основных частиц
     if (points.current) {
-      points.current.rotation.y = t * 0.02
-      points.current.rotation.x = Math.sin(t * 0.1) * 0.1
-      
-      // Анимация движения частиц
-      const pos = points.current.geometry.attributes.position.array as Float32Array
-      for (let i = 0; i < pos.length; i += 3) {
-        pos[i] += velocities[i]
-        pos[i + 1] += velocities[i + 1] + Math.sin(t * 0.5 + i * 0.01) * 0.01
-        pos[i + 2] += velocities[i + 2]
-        
-        // Возвращаем частицы обратно если они выходят за границы
-        if (Math.abs(pos[i]) > SPREAD / 2) velocities[i] *= -1
-        if (Math.abs(pos[i + 1]) > SPREAD / 2) velocities[i + 1] *= -1
-        if (Math.abs(pos[i + 2]) > SPREAD / 4) velocities[i + 2] *= -1
-      }
-      points.current.geometry.attributes.position.needsUpdate = true
+      points.current.rotation.y = t * 0.012
+      points.current.rotation.x = Math.sin(t * 0.05) * 0.1
     }
-    
-    // Пульсация кругов с разными скоростями
+
+    // Плавное движение больших частиц
+    if (floatingParticles.current) {
+      floatingParticles.current.rotation.y = -t * 0.008
+      floatingParticles.current.rotation.z = Math.sin(t * 0.03) * 0.05
+    }
+
+    // Анимация кругов - волны
     if (circles.current) {
       circles.current.children.forEach((circle, i) => {
-        const scale = 1 + Math.sin(t * 0.4 + i * 1.2) * 0.12
+        const scale = 1 + Math.sin(t * 0.25 + i * 0.8) * 0.06 + Math.cos(t * 0.15 + i) * 0.04
         circle.scale.setScalar(scale)
-        circle.rotation.z = t * (0.05 + i * 0.02)
         
         // Изменение прозрачности
-        const material = (circle as THREE.Mesh).material as THREE.MeshBasicMaterial
-        material.opacity = 0.08 + Math.sin(t * 0.6 + i) * 0.04
-      })
-    }
-    
-    // Плавающие орбы по орбитам
-    if (floatingOrbs.current) {
-      floatingOrbs.current.children.forEach((orb, i) => {
-        const offset = i * Math.PI * 0.5
-        const radius = 25 + i * 5
-        orb.position.x = Math.cos(t * 0.3 + offset) * radius
-        orb.position.y = Math.sin(t * 0.5 + offset) * 5
-        orb.position.z = Math.sin(t * 0.3 + offset) * 10 - 10
-        
-        // Пульсация орбов
-        const scale = 1 + Math.sin(t * 2 + i) * 0.3
-        orb.scale.setScalar(scale)
+        const material = circle.material as THREE.MeshBasicMaterial
+        material.opacity = 0.06 + Math.sin(t * 0.3 + i * 0.5) * 0.03
       })
     }
   })
 
   const circlePositions = useMemo(
     () => [
-      [-18, 6, -10],
+      [-18, 8, -10],
       [22, -10, -14],
-      [-8, -18, -8],
-      [20, 14, -12],
-      [-25, -8, -9],
+      [-8, -18, -6],
+      [20, 15, -12],
+      [-25, -8, -8],
       [5, 20, -15],
-      [0, -12, -16],
-    ],
-    []
-  )
-  
-  const orbData = useMemo(
-    () => [
-      { pos: [-30, 10, -5], color: "#3b82f6", size: 0.6 },
-      { pos: [30, -5, -8], color: "#22c55e", size: 0.5 },
-      { pos: [15, 15, -6], color: "#3b82f6", size: 0.7 },
-      { pos: [-20, -15, -4], color: "#e5ff00", size: 0.4 },
+      [-15, -25, -10],
     ],
     []
   )
 
   return (
     <>
-      {/* Частицы с движением и цветом - менее яркие */}
+      {/* Основное облако мелких частиц */}
       <points ref={points}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-          <bufferAttribute attach="attributes-color" args={[colors, 3]} />
         </bufferGeometry>
         <pointsMaterial
-          size={0.06}
-          vertexColors
+          size={0.05}
+          color="#ffffff"
           transparent
-          opacity={0.3}
+          opacity={0.4}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
       </points>
 
-      {/* Пульсирующие круги с градиентом - очень тонкие */}
+      {/* Большие плавающие частицы с свечением */}
+      <points ref={floatingParticles}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[largeParticlePositions, 3]} />
+        </bufferGeometry>
+        <pointsMaterial
+          size={0.15}
+          color="#3b82f6"
+          transparent
+          opacity={0.5}
+          sizeAttenuation
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </points>
+
+      {/* Волнообразные круги на заднем плане */}
       <group ref={circles}>
         {circlePositions.map((pos, i) => (
           <mesh key={i} position={pos as [number, number, number]}>
-            <ringGeometry args={[10 + i * 2.5, 11 + i * 2.5, 64]} />
+            <circleGeometry args={[10 + i * 2.5, 64]} />
             <meshBasicMaterial
-              color={i % 3 === 0 ? "#3b82f6" : i % 3 === 1 ? "#22c55e" : "#8b5cf6"}
+              color="#3b82f6"
               transparent
-              opacity={0.03}
+              opacity={0.06}
               side={THREE.DoubleSide}
               depthWrite={false}
               blending={THREE.AdditiveBlending}
@@ -144,43 +127,50 @@ export default function HeroScene() {
           </mesh>
         ))}
       </group>
-      
-      {/* Плавающие светящиеся орбы по орбитам - менее яркие */}
-      <group ref={floatingOrbs}>
-        {orbData.map((orb, i) => (
-          <group key={i} position={orb.pos as [number, number, number]}>
-            {/* Внутреннее свечение */}
-            <mesh>
-              <sphereGeometry args={[orb.size * 1.5, 16, 16]} />
-              <meshBasicMaterial
-                color={orb.color}
-                transparent
-                opacity={0.1}
-                blending={THREE.AdditiveBlending}
-              />
-            </mesh>
-            {/* Основная сфера */}
-            <mesh>
-              <sphereGeometry args={[orb.size, 16, 16]} />
-              <meshBasicMaterial
-                color={orb.color}
-                transparent
-                opacity={0.4}
-              />
-            </mesh>
-            {/* Свет - менее интенсивный */}
-            <pointLight
-              color={orb.color}
-              intensity={1}
-              distance={15}
-            />
-          </group>
-        ))}
-      </group>
 
-      {/* Ambient освещение для общей атмосферы - очень тонкое */}
-      <ambientLight intensity={0.05} />
-      <hemisphereLight args={["#3b82f6", "#22c55e", 0.1]} />
+      {/* Дополнительные светящиеся кольца */}
+      {[0, 1, 2].map((i) => (
+        <mesh key={`ring-${i}`} position={[0, 0, -5 - i * 5]} rotation={[0, 0, (i * Math.PI) / 6]}>
+          <torusGeometry args={[15 + i * 8, 0.05, 16, 100]} />
+          <meshBasicMaterial
+            color="#3b82f6"
+            transparent
+            opacity={0.08 - i * 0.02}
+            depthWrite={false}
+            blending={THREE.AdditiveBlending}
+          />
+        </mesh>
+      ))}
+
+      {/* Тонкие линии для глубины */}
+      {Array.from({ length: 12 }).map((_, i) => {
+        const angle = (i / 12) * Math.PI * 2
+        const distance = 40
+        return (
+          <line key={`line-${i}`}>
+            <bufferGeometry>
+              <bufferAttribute
+                attach="attributes-position"
+                args={[
+                  new Float32Array([
+                    0, 0, 0,
+                    Math.cos(angle) * distance,
+                    Math.sin(angle) * distance * 0.5,
+                    -15,
+                  ]),
+                  3,
+                ]}
+              />
+            </bufferGeometry>
+            <lineBasicMaterial
+              color="#3b82f6"
+              transparent
+              opacity={0.05}
+              blending={THREE.AdditiveBlending}
+            />
+          </line>
+        )
+      })}
     </>
   )
 }
