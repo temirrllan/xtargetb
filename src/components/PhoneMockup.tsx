@@ -107,7 +107,7 @@ export default function PhoneMockup() {
       const easeOutCubic = 1 - Math.pow(1 - progress, 3)
 
       setAnimatedMetrics(
-        METRICS.map((metric, index) => {
+        METRICS.map((_, index) => {
           const startValue = currentValues[index]
           const startWidth = currentWidths[index]
           
