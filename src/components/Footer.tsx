@@ -1,3 +1,4 @@
+import { handleSmoothScroll } from '../utils/smoothScroll'
 import './Footer.css'
 
 const PRODUCT_LINKS = [
@@ -22,7 +23,14 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__brand">
-          <a href="#" className="footer__logo">
+          <a 
+            href="#" 
+            className="footer__logo"
+            onClick={(e) => {
+              e.preventDefault()
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }}
+          >
             <span className="footer__logo-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -59,7 +67,16 @@ export default function Footer() {
             <ul className="footer__links">
               {PRODUCT_LINKS.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href}>{link.label}</a>
+                  <a 
+                    href={link.href}
+                    onClick={(e) => {
+                      if (link.href.startsWith('#') && link.href !== '#') {
+                        handleSmoothScroll(e, link.href)
+                      }
+                    }}
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
