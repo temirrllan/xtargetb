@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
 import OrbitalScene from '../scenes/OrbitalScene'
 import './Performers.css'
 
@@ -66,6 +67,14 @@ export default function Performers() {
     <section className="performers">
       <div className="performers__container">
         <div className="performers__visual">
+          <div className="performers__hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+            <span>Перетащите для вращения</span>
+          </div>
           <div className="performers__canvas-wrap">
             <Canvas
               camera={{ position: [0, 0, 45], fov: 50 }}
@@ -74,6 +83,17 @@ export default function Performers() {
             >
               <Suspense fallback={null}>
                 <OrbitalScene />
+                <OrbitControls
+                  enableZoom={false}
+                  enablePan={false}
+                  minPolarAngle={Math.PI / 3}
+                  maxPolarAngle={Math.PI / 1.5}
+                  autoRotate={true}
+                  autoRotateSpeed={0.5}
+                  rotateSpeed={0.5}
+                  dampingFactor={0.05}
+                  enableDamping={true}
+                />
               </Suspense>
             </Canvas>
           </div>

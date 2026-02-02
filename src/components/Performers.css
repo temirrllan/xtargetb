@@ -29,10 +29,54 @@
 
 .performers__visual {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 550px;
   position: relative;
+}
+
+.performers__hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #b794f6;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  animation: hint-pulse 2s ease-in-out infinite;
+  cursor: grab;
+  user-select: none;
+}
+
+.performers__hint svg {
+  width: 16px;
+  height: 16px;
+  animation: hint-rotate 3s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes hint-rotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
 }
 
 .performers__visual::before {
@@ -67,6 +111,13 @@
   position: relative;
   z-index: 1;
   filter: drop-shadow(0 0 40px rgba(229, 255, 0, 0.15));
+  cursor: grab;
+  transition: filter 0.3s ease;
+}
+
+.performers__canvas-wrap:active {
+  cursor: grabbing;
+  filter: drop-shadow(0 0 50px rgba(229, 255, 0, 0.25));
 }
 
 .performers__canvas-wrap canvas {
@@ -74,6 +125,7 @@
   width: 100%;
   height: 100%;
   background: transparent !important;
+  touch-action: none;
 }
 
 .performers__badge {
@@ -241,6 +293,18 @@
   .performers__badge {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .performers__hint span {
+    display: none;
+  }
+
+  .performers__hint {
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
   }
 }
 

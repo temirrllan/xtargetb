@@ -13,7 +13,6 @@ export default function OrbitalScene() {
   const ringsRef = useRef<THREE.Mesh[]>([])
   const particlesRef = useRef<THREE.Mesh[]>([])
   const smallParticlesRef = useRef<THREE.Points>(null)
-  const trailsRef = useRef<THREE.Line[]>([])
 
   const orbitRadii = useMemo(() => [8, 11, 14, 17, 20], [])
   const colors = useMemo(() => ['#e5ff00', '#38a3f8', '#22c55e', '#8b5cf6', '#ec4899'], [])
@@ -34,11 +33,12 @@ export default function OrbitalScene() {
   useFrame((state) => {
     const t = state.clock.elapsedTime
 
+    // Очень медленное автовращение группы (только если не взаимодействуют)
     if (group.current) {
-      group.current.rotation.y = t * 0.08
-      group.current.rotation.x = Math.sin(t * 0.2) * 0.05
+      group.current.rotation.y += 0.001
     }
 
+    // Пульсация центральной сферы
     if (centralSphere.current) {
       const scale = 1 + Math.sin(t * 1.5) * 0.06 + Math.sin(t * 3) * 0.03
       centralSphere.current.scale.setScalar(scale)
@@ -60,7 +60,7 @@ export default function OrbitalScene() {
       }
     })
 
-    // Реалистичное движение частиц по орбитам с легким покачиванием
+    // Реалистичное движение частиц по орбитам
     particlesRef.current.forEach((particle, i) => {
       if (particle) {
         const orbitIndex = Math.floor(i / PARTICLES_PER_ORBIT)
@@ -74,7 +74,7 @@ export default function OrbitalScene() {
         particle.position.z = Math.sin(angle) * radius
         particle.position.y = Math.sin(t * 0.4 + i * 0.5) * 1.5 + Math.cos(t * 0.3 + i) * 0.5
         
-        // Небольшое вращение самих частиц
+        // Вращение самих частиц
         particle.rotation.x = t * 2 + i
         particle.rotation.y = t * 1.5 + i
         
@@ -93,13 +93,14 @@ export default function OrbitalScene() {
 
   return (
     <group ref={group}>
-      {/* Дальнее свечение - самое большое */}
+      {/* Дальнее свечение */}
       <mesh position={[0, 0, -2]}>
         <circleGeometry args={[25, 64]} />
         <meshBasicMaterial 
           color="#e5ff00" 
           transparent 
           opacity={0.03}
+          depthWrite={false}
         />
       </mesh>
 
@@ -110,16 +111,17 @@ export default function OrbitalScene() {
           color="#e5ff00" 
           transparent 
           opacity={0.2}
+          depthWrite={false}
         />
       </mesh>
 
-      {/* Центральная большая сфера с градиентом */}
+      {/* Центральная большая сфера */}
       <mesh ref={centralSphere}>
         <sphereGeometry args={[5.5, 64, 64]} />
         <meshBasicMaterial color="#e5ff00" />
       </mesh>
       
-      {/* Тонкое внешнее кольцо вокруг центральной сферы */}
+      {/* Внешнее кольцо вокруг центральной сферы */}
       <mesh>
         <torusGeometry args={[5.8, 0.08, 16, 100]} />
         <meshBasicMaterial color="#b8c900" />
@@ -131,7 +133,7 @@ export default function OrbitalScene() {
         <meshBasicMaterial color="#0a0e16" />
       </mesh>
 
-      {/* Ромб в центре - повернутый квадрат с толстыми линиями */}
+      {/* Ромб в центре */}
       <group rotation={[0, 0, Math.PI / 4]} position={[0, 0, 0.2]}>
         <mesh>
           <torusGeometry args={[2.2, 0.08, 8, 4]} />
@@ -139,10 +141,9 @@ export default function OrbitalScene() {
         </mesh>
       </group>
 
-      {/* Орбитальные кольца (полупрозрачные с эффектом глубины) */}
+      {/* Орбитальные кольца */}
       {orbitRadii.map((radius, i) => (
         <group key={`ring-group-${i}`}>
-          {/* Основное кольцо */}
           <mesh
             ref={(el) => { if (el) ringsRef.current[i] = el }}
             rotation={[Math.PI / 2 + (i * 0.1), 0, (i / orbitRadii.length) * Math.PI * 0.3]}
@@ -152,9 +153,9 @@ export default function OrbitalScene() {
               color="#2a3342" 
               transparent 
               opacity={0.25 - i * 0.03}
+              depthWrite={false}
             />
           </mesh>
-          {/* Светящееся кольцо поверх */}
           <mesh
             rotation={[Math.PI / 2 + (i * 0.1), 0, (i / orbitRadii.length) * Math.PI * 0.3]}
           >
@@ -163,12 +164,13 @@ export default function OrbitalScene() {
               color={colors[i % colors.length]} 
               transparent 
               opacity={0.15}
+              depthWrite={false}
             />
           </mesh>
         </group>
       ))}
 
-      {/* Частицы на орбитах с улучшенным дизайном */}
+      {/* Частицы на орбитах */}
       {orbitRadii.map((radius, orbitIndex) => 
         Array.from({ length: PARTICLES_PER_ORBIT }).map((_, particleIndex) => {
           const i = orbitIndex * PARTICLES_PER_ORBIT + particleIndex
@@ -185,18 +187,17 @@ export default function OrbitalScene() {
                 Math.sin(angle) * radius
               ]}
             >
-              {/* Основная частица */}
               <mesh>
                 <sphereGeometry args={[0.35, 16, 16]} />
                 <meshBasicMaterial color={color} />
               </mesh>
-              {/* Свечение вокруг частицы */}
               <mesh scale={2}>
                 <sphereGeometry args={[0.35, 16, 16]} />
                 <meshBasicMaterial 
                   color={color} 
                   transparent 
                   opacity={0.2}
+                  depthWrite={false}
                 />
               </mesh>
             </group>
@@ -204,7 +205,7 @@ export default function OrbitalScene() {
         })
       )}
 
-      {/* Маленькие фоновые частицы для глубины */}
+      {/* Маленькие фоновые частицы */}
       <points ref={smallParticlesRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -218,10 +219,11 @@ export default function OrbitalScene() {
           transparent
           opacity={0.4}
           sizeAttenuation
+          depthWrite={false}
         />
       </points>
 
-      {/* Дополнительные светящиеся точки ближе к центру */}
+      {/* Дополнительные светящиеся точки */}
       <points>
         <bufferGeometry>
           <bufferAttribute
@@ -243,6 +245,7 @@ export default function OrbitalScene() {
           transparent
           opacity={0.6}
           sizeAttenuation
+          depthWrite={false}
         />
       </points>
     </group>
