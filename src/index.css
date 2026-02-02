@@ -32,9 +32,7 @@ a {
   transition: color 0.2s ease;
 }
 
-a:hover {
-  color: var(--accent-blue);
-}
+
 
 button {
   font-family: inherit;

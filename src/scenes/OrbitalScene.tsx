@@ -18,7 +18,6 @@ export default function OrbitalScene() {
   const orbitRadii = useMemo(() => [8, 11, 14, 17, 20], [])
   const colors = useMemo(() => ['#e5ff00', '#38a3f8', '#22c55e', '#8b5cf6', '#ec4899'], [])
 
-  // Позиции для маленьких фоновых частиц
   const smallParticlePositions = useMemo(() => {
     const positions = new Float32Array(SMALL_PARTICLES * 3)
     for (let i = 0; i < SMALL_PARTICLES * 3; i += 3) {
@@ -35,13 +34,11 @@ export default function OrbitalScene() {
   useFrame((state) => {
     const t = state.clock.elapsedTime
 
-    // Медленное вращение всей группы
     if (group.current) {
       group.current.rotation.y = t * 0.08
       group.current.rotation.x = Math.sin(t * 0.2) * 0.05
     }
 
-    // Плавная пульсация центральной сферы
     if (centralSphere.current) {
       const scale = 1 + Math.sin(t * 1.5) * 0.06 + Math.sin(t * 3) * 0.03
       centralSphere.current.scale.setScalar(scale)

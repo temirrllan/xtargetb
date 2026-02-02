@@ -2,7 +2,7 @@
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-subtle);
   padding: var(--section-padding-y) var(--section-padding-x);
-  padding-bottom: calc(var(--section-padding-y) + 48px); /* space for bottom bar */
+  padding-bottom: calc(var(--section-padding-y) + 48px);
 }
 
 .footer__container {

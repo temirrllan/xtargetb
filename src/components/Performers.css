@@ -5,7 +5,6 @@
   position: relative;
 }
 
-/* Добавляем тонкий градиент сверху */
 .performers::before {
   content: '';
   position: absolute;
@@ -36,7 +35,6 @@
   position: relative;
 }
 
-/* Эффект свечения за 3D-сценой */
 .performers__visual::before {
   content: '';
   position: absolute;
@@ -124,7 +122,6 @@
   display: inline-block;
 }
 
-/* Тонкое свечение под выделенным текстом */
 .performers__highlight::after {
   content: '';
   position: absolute;
@@ -160,7 +157,6 @@
   overflow: hidden;
 }
 
-/* Эффект свечения при наведении */
 .performers__card::before {
   content: '';
   position: absolute;

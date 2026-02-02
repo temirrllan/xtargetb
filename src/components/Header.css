@@ -31,12 +31,12 @@
 .header__logo-icon {
   width: 32px;
   height: 32px;
-  background: var(--accent-green);
+  background: var(--accent-yellow);
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #000000;
 }
 
 .header__logo-icon svg {
@@ -51,7 +51,7 @@
 }
 
 .header__logo-x {
-  color: var(--accent-green);
+  color: var(--accent-white);
 }
 
 .header__nav {
@@ -94,7 +94,7 @@
 }
 
 .header__cta--green .header__cta-icon {
-  color: #fff;
+  color: #000000;
 }
 
 .header__cta-icon {

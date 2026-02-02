@@ -13,7 +13,6 @@ export default function HeroScene() {
   const positions = useMemo(() => {
     const pos = new Float32Array(PARTICLE_COUNT * 3)
     for (let i = 0; i < PARTICLE_COUNT * 3; i += 3) {
-      // Создаем более естественное распределение частиц
       const angle = Math.random() * Math.PI * 2
       const radius = Math.random() * SPREAD * 0.5
       const height = (Math.random() - 0.5) * SPREAD * 0.8
@@ -25,7 +24,6 @@ export default function HeroScene() {
     return pos
   }, [])
 
-  // Большие плавающие частицы
   const largeParticlePositions = useMemo(() => {
     const pos = new Float32Array(150 * 3)
     for (let i = 0; i < 150 * 3; i += 3) {
@@ -39,25 +37,21 @@ export default function HeroScene() {
   useFrame((state) => {
     const t = state.clock.elapsedTime
     
-    // Медленное вращение основных частиц
     if (points.current) {
       points.current.rotation.y = t * 0.012
       points.current.rotation.x = Math.sin(t * 0.05) * 0.1
     }
 
-    // Плавное движение больших частиц
     if (floatingParticles.current) {
       floatingParticles.current.rotation.y = -t * 0.008
       floatingParticles.current.rotation.z = Math.sin(t * 0.03) * 0.05
     }
 
-    // Анимация кругов - волны
     if (circles.current) {
       circles.current.children.forEach((circle, i) => {
         const scale = 1 + Math.sin(t * 0.25 + i * 0.8) * 0.06 + Math.cos(t * 0.15 + i) * 0.04
         circle.scale.setScalar(scale)
         
-        // Изменение прозрачности
         const material = circle.material as THREE.MeshBasicMaterial
         material.opacity = 0.06 + Math.sin(t * 0.3 + i * 0.5) * 0.03
       })
@@ -79,7 +73,6 @@ export default function HeroScene() {
 
   return (
     <>
-      {/* Основное облако мелких частиц */}
       <points ref={points}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[positions, 3]} />
@@ -95,7 +88,6 @@ export default function HeroScene() {
         />
       </points>
 
-      {/* Большие плавающие частицы с свечением */}
       <points ref={floatingParticles}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[largeParticlePositions, 3]} />
@@ -111,7 +103,6 @@ export default function HeroScene() {
         />
       </points>
 
-      {/* Волнообразные круги на заднем плане */}
       <group ref={circles}>
         {circlePositions.map((pos, i) => (
           <mesh key={i} position={pos as [number, number, number]}>
@@ -128,7 +119,6 @@ export default function HeroScene() {
         ))}
       </group>
 
-      {/* Дополнительные светящиеся кольца */}
       {[0, 1, 2].map((i) => (
         <mesh key={`ring-${i}`} position={[0, 0, -5 - i * 5]} rotation={[0, 0, (i * Math.PI) / 6]}>
           <torusGeometry args={[15 + i * 8, 0.05, 16, 100]} />
@@ -142,7 +132,6 @@ export default function HeroScene() {
         </mesh>
       ))}
 
-      {/* Тонкие линии для глубины */}
       {Array.from({ length: 12 }).map((_, i) => {
         const angle = (i / 12) * Math.PI * 2
         const distance = 40

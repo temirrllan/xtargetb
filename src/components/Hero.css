@@ -23,7 +23,6 @@
   background: transparent !important;
 }
 
-/* Центральная колонка — все элементы строго по центру, друг под другом */
 .hero__content {
   position: relative;
   z-index: 1;
@@ -36,7 +35,6 @@
   text-align: center;
 }
 
-/* Entrance animations */
 .hero__animate {
   opacity: 0;
   animation: hero-fade-up 0.7s ease-out forwards;
@@ -60,7 +58,6 @@
   }
 }
 
-/* Badge — light blue as in mockup */
 .hero__badge {
   display: inline-flex;
   align-items: center;
@@ -88,7 +85,6 @@
   margin: 0 0 1.25rem;
 }
 
-/* Волны на заднем фоне — круги расходятся как волны */
 .hero__icon-waves {
   position: absolute;
   left: 50%;
@@ -128,7 +124,6 @@
   }
 }
 
-/* Свечение тоже сзади */
 .hero__icon-bg {
   z-index: 0;
 }
