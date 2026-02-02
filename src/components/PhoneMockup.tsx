@@ -140,17 +140,17 @@ export default function PhoneMockup() {
             </svg>
           </div>
           <div className="phone-mockup__metrics">
-            {METRICS.map((_, index) => (
+            {animatedMetrics.map((animatedMetric, index) => (
               <div key={METRICS[index].label} className="phone-mockup__row">
                 <span>{METRICS[index].label}</span>
                 <div className="phone-mockup__bar">
                   <div 
                     className="phone-mockup__fill" 
-                    style={{ width: `${animatedMetrics[index].width}%` }} 
+                    style={{ width: `${animatedMetric.width}%` }} 
                   />
                 </div>
                 <span className="phone-mockup__pct">
-                  +{animatedMetrics[index].value}%
+                  +{animatedMetric.value}%
                 </span>
               </div>
             ))}

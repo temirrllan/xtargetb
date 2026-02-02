@@ -52,8 +52,10 @@ export default function HeroScene() {
         const scale = 1 + Math.sin(t * 0.25 + i * 0.8) * 0.06 + Math.cos(t * 0.15 + i) * 0.04
         circle.scale.setScalar(scale)
         
-        const material = circle.material as THREE.MeshBasicMaterial
-        material.opacity = 0.06 + Math.sin(t * 0.3 + i * 0.5) * 0.03
+        // Проверяем, что у объекта есть material и это THREE.Mesh
+        if (circle instanceof THREE.Mesh && circle.material instanceof THREE.MeshBasicMaterial) {
+          circle.material.opacity = 0.06 + Math.sin(t * 0.3 + i * 0.5) * 0.03
+        }
       })
     }
   })

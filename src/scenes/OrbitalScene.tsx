@@ -2,7 +2,6 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const ORBIT_RINGS = 5
 const PARTICLES_PER_ORBIT = 6
 const SMALL_PARTICLES = 40
 
