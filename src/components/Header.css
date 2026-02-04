@@ -31,7 +31,11 @@
 .header__logo-icon {
   width: 32px;
   height: 32px;
-  background: var(--accent-yellow);
+  background: var(--accent-blue);
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.4);
+  animation: hero-btn-glow 2.5s ease-in-out infinite;
+  
   border-radius: 6px;
   display: flex;
   align-items: center;

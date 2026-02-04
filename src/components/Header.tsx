@@ -64,7 +64,7 @@ export default function Header() {
 
         <a 
           href="#open-bot" 
-          className="header__cta header__cta--green"
+          className="header__cta hero__btn--primary"
           onClick={(e) => {
             e.preventDefault()
             // Здесь можно добавить логику открытия бота
