@@ -49,7 +49,12 @@ export default function Tariffs() {
                 </li>
               ))}
             </ul>
-            <a href="#open-bot" className="tariffs__btn tariffs__btn--outline">
+            <a 
+              href="https://t.me/TargetXAI_bot" 
+              className="tariffs__btn tariffs__btn--outline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Выбрать Plus →
             </a>
           </article>
@@ -70,7 +75,12 @@ export default function Tariffs() {
                 </li>
               ))}
             </ul>
-            <a href="#open-bot" className="tariffs__btn tariffs__btn--primary">
+            <a 
+              href="https://t.me/TargetXAI_bot" 
+              className="tariffs__btn tariffs__btn--primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Выбрать Pro →
             </a>
           </article>

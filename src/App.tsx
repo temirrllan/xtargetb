@@ -19,7 +19,7 @@ function App() {
         <Tariffs />
         <Footer />
       </main>
-      <BottomBar />
+      {/* <BottomBar /> */}
     </>
   )
 }

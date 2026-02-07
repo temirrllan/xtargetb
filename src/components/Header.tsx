@@ -63,13 +63,10 @@ export default function Header() {
         </nav>
 
         <a 
-          href="#open-bot" 
+          href="https://t.me/TargetXAI_bot" 
           className="header__cta hero__btn--primary"
-          onClick={(e) => {
-            e.preventDefault()
-            // Здесь можно добавить логику открытия бота
-            console.log('Открыть бот')
-          }}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <svg className="header__cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
