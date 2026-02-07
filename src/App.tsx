@@ -5,7 +5,6 @@ import ChannelOwners from './components/ChannelOwners'
 import Performers from './components/Performers'
 import Tariffs from './components/Tariffs'
 import Footer from './components/Footer'
-import BottomBar from './components/BottomBar'
 
 function App() {
   return (

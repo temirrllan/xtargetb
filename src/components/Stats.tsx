@@ -5,21 +5,25 @@ const STATS = [
     icon: 'person',
     value: '50K+',
     label: 'Активных пользователей',
+    gradient: false,
   },
   {
     icon: 'check',
     value: '2M+',
     label: 'Выполненных заданий',
+    gradient: 'gradient-1',
   },
   {
     icon: 'wallet',
     value: '150K+',
     label: 'TON выведено',
+    gradient: false,
   },
   {
     icon: 'broadcast',
     value: '10K+',
     label: 'Каналов подключено',
+    gradient: 'gradient-2',
   },
 ]
 
@@ -61,8 +65,11 @@ export default function Stats() {
     <section className="stats" id="functions">
       <div className="stats__container">
         {STATS.map((stat) => (
-          <article key={stat.label} className="stats__card">
-            <div className="stats__icon">
+          <article 
+            key={stat.label} 
+            className={`stats__card ${stat.gradient ? `stats__card--${stat.gradient}` : ''}`}
+          >
+            <div className={`stats__icon ${stat.gradient ? `stats__icon--${stat.gradient}` : ''}`}>
               <StatIcon name={stat.icon} />
             </div>
             <span className="stats__value">{stat.value}</span>
