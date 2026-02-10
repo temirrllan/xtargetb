@@ -1,47 +1,6 @@
 .stats {
   padding: var(--section-padding-y) var(--section-padding-x);
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Светящиеся круги на фоне */
-.stats::before {
-  content: '';
-  position: absolute;
-  left: -8rem;
-  top: 5rem;
-  width: 20rem;
-  height: 20rem;
-  border-radius: 50%;
-  background: rgba(29, 78, 216, 0.2);
-  filter: blur(80px);
-  animation: glow-pulse 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.stats::after {
-  content: '';
-  position: absolute;
-  right: -7.5rem;
-  top: -5rem;
-  width: 18rem;
-  height: 18rem;
-  border-radius: 50%;
-  background: rgba(6, 182, 212, 0.1);
-  filter: blur(80px);
-  pointer-events: none;
-}
-
-@keyframes glow-pulse {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
+  background: var(--bg-primary);
 }
 
 .stats__container {
@@ -50,8 +9,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  position: relative;
-  z-index: 1;
 }
 
 .stats__card {
@@ -61,32 +18,11 @@
   text-align: center;
   transition: transform 0.2s, background 0.2s;
   border: 1px solid var(--border-subtle);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Градиентный фон для 2-го блока */
-.stats__card--gradient-1 {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-/* Градиентный фон для 4-го блока */
-.stats__card--gradient-2 {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-  border: 1px solid rgba(6, 182, 212, 0.3);
 }
 
 .stats__card:hover {
   transform: translateY(-4px);
-}
-
-.stats__card--gradient-1:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.22) 0%, rgba(6, 182, 212, 0.22) 100%);
-}
-
-.stats__card--gradient-2:hover {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.22) 0%, rgba(139, 92, 246, 0.22) 100%);
+  background: var(--bg-card-hover);
 }
 
 .stats__icon {
@@ -94,22 +30,6 @@
   height: 48px;
   margin: 0 auto 1rem;
   color: var(--accent-blue);
-}
-
-/* Градиент для 2-го блока (check) */
-.stats__icon--gradient-1 {
-  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Градиент для 4-го блока (broadcast) */
-.stats__icon--gradient-2 {
-  background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .stats__icon svg {
